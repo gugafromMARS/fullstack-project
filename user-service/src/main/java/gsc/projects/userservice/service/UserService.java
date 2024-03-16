@@ -6,4 +6,7 @@ import gsc.projects.userservice.dto.UserDto;
 public interface UserService {
     UserDto createUser(UserCreateDto userCreateDto);
 
+    UserDto getUserByEmail(String userEmail);
+
+    void deleteUserById(Long userId);
 }
