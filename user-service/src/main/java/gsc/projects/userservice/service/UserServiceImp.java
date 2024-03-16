@@ -31,4 +31,21 @@ public class UserServiceImp implements UserService{
         userRepository.save(existingUser);
         return userConverter.toDto(existingUser);
     }
+
+    @Override
+    public UserDto getUserByEmail(String userEmail) {
+        User existingUser = userRepository.findByEmail(userEmail);
+        if(existingUser == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return userConverter.toDto(existingUser);
+    }
+
+    @Override
+    public void deleteUserById(Long userId) {
+        userRepository.delete(userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")));
+    }
+
+
 }
