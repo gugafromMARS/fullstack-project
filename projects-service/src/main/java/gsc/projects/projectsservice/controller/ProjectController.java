@@ -2,6 +2,7 @@ package gsc.projects.projectsservice.controller;
 
 
 import gsc.projects.projectsservice.dto.ProjectCreateDto;
+import gsc.projects.projectsservice.dto.TaskCreateDto;
 import gsc.projects.projectsservice.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,16 @@ public class ProjectController {
         return new ResponseEntity<>("Project deleted successfully", HttpStatus.OK);
     }
 
+    @GetMapping("/{projectId}/tasks/{userEmail}")
+    public ResponseEntity<?> createTask(@RequestBody TaskCreateDto taskCreateDto, @PathVariable ("projectId") Long projectId, @PathVariable ("userEmail") String userEmail){
+        return ResponseEntity.ok(projectService.createTaskForEachProject(taskCreateDto, projectId, userEmail));
+    }
+
+    @DeleteMapping("/{projectId}/tasks/{taskId}/{userEmail}")
+    public ResponseEntity<?> deleteTask(@PathVariable ("projectId") Long projectId, @PathVariable ("taskId") Long taskId,
+                                        @PathVariable ("userEmail") String userEmail){
+        projectService.deleteTaskById(projectId,taskId, userEmail);
+        return new ResponseEntity<>("Task deleted successfully!", HttpStatus.OK);
+    }
 
 }
