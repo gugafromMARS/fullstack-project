@@ -68,7 +68,7 @@ public class ProjectServiceImp implements ProjectService{
         Project existingProject = projectRepository.findByUserEmail(userEmail)
                 .stream().filter(project -> project.getId().equals(projectId))
                 .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-        Task newTask = taskConverter.fromCreateDto(taskCreateDto);
+        Task newTask = taskConverter.fromCreateDto(taskCreateDto, existingProject);
         taskRepository.save(newTask);
         existingProject.getTasks().add(newTask);
         projectRepository.save(existingProject);

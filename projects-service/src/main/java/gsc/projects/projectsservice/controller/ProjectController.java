@@ -34,9 +34,9 @@ public class ProjectController {
         return new ResponseEntity<>("Project deleted successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/{projectId}/tasks/{userEmail}")
+    @PostMapping ("/{projectId}/tasks/{userEmail}")
     public ResponseEntity<?> createTask(@RequestBody TaskCreateDto taskCreateDto, @PathVariable ("projectId") Long projectId, @PathVariable ("userEmail") String userEmail){
-        return ResponseEntity.ok(projectService.createTaskForEachProject(taskCreateDto, projectId, userEmail));
+        return new ResponseEntity<>(projectService.createTaskForEachProject(taskCreateDto, projectId, userEmail), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{projectId}/tasks/{taskId}/{userEmail}")

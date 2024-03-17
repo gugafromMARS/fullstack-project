@@ -2,11 +2,12 @@ package gsc.projects.projectsservice.converter;
 
 import gsc.projects.projectsservice.dto.TaskCreateDto;
 import gsc.projects.projectsservice.dto.TaskDto;
+import gsc.projects.projectsservice.model.Project;
 import gsc.projects.projectsservice.model.Task;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskConverterImp {
+public class TaskConverterImp implements TaskConverter{
 
     public TaskDto toDto(Task task){
         return new TaskDto().builder()
@@ -16,11 +17,11 @@ public class TaskConverterImp {
                 .build();
     }
 
-    public Task fromCreateDto(TaskCreateDto taskCreateDto){
+    public Task fromCreateDto(TaskCreateDto taskCreateDto, Project project){
         return new Task().builder()
                 .withName(taskCreateDto.getName())
                 .withDescription(taskCreateDto.getDescription())
-                .withProject(taskCreateDto.getProject())
+                .withProject(project)
                 .build();
     }
 }
