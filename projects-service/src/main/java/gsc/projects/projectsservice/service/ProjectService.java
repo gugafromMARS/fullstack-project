@@ -11,12 +11,12 @@ public interface ProjectService {
 
 
     ProjectDto createProject(ProjectCreateDto projectCreateDto);
-    ProjectDto getProjectById(Long id, String userEmail);
+    ProjectDto getProjectById(Long id);
     List<ProjectDto> getProjectsByUserEmail(String userEmail);
-    void deleteProjectById(Long id, String userEmail);
+    void deleteProjectById(Long id);
 
-    TaskDto createTaskForEachProject(TaskCreateDto taskCreateDto, Long projectId, String userEmail);
+    TaskDto createTaskForEachProject(TaskCreateDto taskCreateDto, Long projectId);
 
-    void deleteTaskById(Long projectId, Long taskId, String userEmail);
+    void deleteTaskById(Long projectId, Long taskId);
 }
 

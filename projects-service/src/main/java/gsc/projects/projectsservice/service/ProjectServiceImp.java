@@ -42,10 +42,9 @@ public class ProjectServiceImp implements ProjectService{
     }
 
     @Override
-    public ProjectDto getProjectById(Long id, String userEmail) {
-        return projectRepository.findByUserEmail(userEmail).stream().filter(project -> project.getId().equals(id))
-                .map(project -> projectConverter.toDto(project))
-                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+    public ProjectDto getProjectById(Long id) {
+        return projectRepository.findById(id).map(project -> projectConverter.toDto(project))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found!"));
     }
 
     @Override
@@ -56,18 +55,18 @@ public class ProjectServiceImp implements ProjectService{
 
     @Override
     @Transactional
-    public void deleteProjectById(Long id, String userEmail) {
+    public void deleteProjectById(Long id) {
         projectRepository.delete(projectRepository
-                .findByUserEmail(userEmail).stream().filter(project -> project.getId().equals(id))
-                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found")));
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found")));
     }
 
     @Override
     @Transactional
-    public TaskDto createTaskForEachProject(TaskCreateDto taskCreateDto, Long projectId, String userEmail) {
-        Project existingProject = projectRepository.findByUserEmail(userEmail)
-                .stream().filter(project -> project.getId().equals(projectId))
-                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+    public TaskDto createTaskForEachProject(TaskCreateDto taskCreateDto, Long projectId) {
+        Project existingProject = projectRepository
+                .findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
         Task newTask = taskConverter.fromCreateDto(taskCreateDto, existingProject);
         taskRepository.save(newTask);
         existingProject.getTasks().add(newTask);
@@ -76,16 +75,14 @@ public class ProjectServiceImp implements ProjectService{
     }
 
     @Override
-    public void deleteTaskById(Long projectId, Long taskId, String userEmail) {
-        Project existingProject = projectRepository.findByUserEmail(userEmail)
-                .stream().filter(project -> project.getId().equals(projectId))
-                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-        existingProject.setTasks(existingProject.getTasks().stream()
-                .filter(task -> !task.getId().equals(taskId)).toList());
+    public void deleteTaskById(Long projectId, Long taskId) {
+        Project existingProject = projectRepository
+                .findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+        Task existingTask = taskRepository.findById(taskId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
+        existingProject.getTasks().remove(existingTask);
         projectRepository.save(existingProject);
-        taskRepository.delete(taskRepository
-                .findById(taskId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found")));
+        taskRepository.delete(existingTask);
     }
 
 }
