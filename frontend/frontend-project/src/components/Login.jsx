@@ -8,15 +8,39 @@ import {
   Container,
   Button,
 } from "@mantine/core";
-import classes from "./AuthenticationTitle.module.css";
-import { useState } from "react";
+import classes from "./Login.module.css";
+import { useRef, useState } from "react";
 import Registration from "./Registration";
+import { LoginRequest } from "./CreateUserRequest";
 
-export function AuthenticationTitle() {
+export default function Login({ userLog }) {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [error, setError] = useState();
+
+  const userEmail = useRef();
+  const userPassword = useRef();
 
   function handleRegister() {
     setIsRegistering((prevState) => !prevState);
+  }
+
+  async function handleLogin() {
+    const userCredentials = {
+      userEmail: userEmail.current.value,
+      password: userPassword.current.value,
+    };
+
+    let canLogin;
+    try {
+      canLogin = await LoginRequest(userCredentials);
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to Login",
+      });
+    }
+    if (canLogin) {
+      userLog();
+    }
   }
 
   if (isRegistering) {
@@ -36,14 +60,20 @@ export function AuthenticationTitle() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@email.com" required />
+        <TextInput
+          label="Email"
+          placeholder="you@email.com"
+          required
+          ref={userEmail}
+        />
         <PasswordInput
           label="Password"
           placeholder="Your password"
           required
           mt="md"
+          ref={userPassword}
         />
-        <Button fullWidth mt="xl">
+        <Button fullWidth mt="xl" onClick={handleLogin}>
           Sign in
         </Button>
       </Paper>

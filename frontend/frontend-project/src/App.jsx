@@ -1,14 +1,22 @@
 import "./App.css";
-import { AuthenticationTitle } from "./components/AuthenticationTitle";
+
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-// import NavbarSegmented from "./components/NavbarSegmented";
+import { useState } from "react";
+import Login from "./components/Login";
+import NavbarSegmented from "./components/NavbarSegmented";
 
 function App() {
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  function handleLogin() {
+    setUserLoggedIn(true);
+  }
+
   return (
     <MantineProvider>
-      {/* <NavbarSegmented /> */}
-      <AuthenticationTitle />
+      {userLoggedIn && <NavbarSegmented />}
+      {!userLoggedIn && <Login userLog={handleLogin} />}
     </MantineProvider>
   );
 }

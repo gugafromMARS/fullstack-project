@@ -34,7 +34,7 @@ public class UserController {
         return new ResponseEntity<>("User delete successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLogin userLogin){
         return ResponseEntity.ok(userService.canLogin(userLogin));
     }
