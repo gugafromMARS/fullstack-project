@@ -4,6 +4,7 @@ package gsc.projects.userservice.service;
 import gsc.projects.userservice.converter.UserConverter;
 import gsc.projects.userservice.dto.UserCreateDto;
 import gsc.projects.userservice.dto.UserDto;
+import gsc.projects.userservice.dto.UserLogin;
 import gsc.projects.userservice.model.User;
 import gsc.projects.userservice.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -22,29 +23,40 @@ public class UserServiceImp implements UserService{
 
     @Override
     @Transactional
-    public UserDto createUser(UserCreateDto userCreateDto) {
+    public boolean createUser(UserCreateDto userCreateDto) {
         User existingUser = userRepository.findByEmail(userCreateDto.getEmail());
         if(existingUser != null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
         }
         existingUser = userConverter.fromCreateDto(userCreateDto);
         userRepository.save(existingUser);
-        return userConverter.toDto(existingUser);
+        return true;
     }
 
     @Override
     public UserDto getUserByEmail(String userEmail) {
-        User existingUser = userRepository.findByEmail(userEmail);
-        if(existingUser == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
-        return userConverter.toDto(existingUser);
+        return userConverter.toDto(checkUser(userEmail));
     }
 
     @Override
-    public void deleteUserById(Long userId) {
-        userRepository.delete(userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")));
+    public void deleteUserByEmail(String userEmail) {
+        User existingUser = checkUser(userEmail);
+        userRepository.delete(existingUser);
+    }
+
+    @Override
+    public boolean canLogin(UserLogin userLogin) {
+        User existingUser = checkUser(userLogin.getUserEmail());
+        return userLogin.getPassword().equals(existingUser.getPassword());
+    }
+
+
+    private User checkUser(String email){
+        User existingUser = userRepository.findByEmail(email);
+        if(existingUser == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return existingUser;
     }
 
 

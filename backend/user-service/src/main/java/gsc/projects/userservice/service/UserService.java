@@ -2,11 +2,14 @@ package gsc.projects.userservice.service;
 
 import gsc.projects.userservice.dto.UserCreateDto;
 import gsc.projects.userservice.dto.UserDto;
+import gsc.projects.userservice.dto.UserLogin;
 
 public interface UserService {
-    UserDto createUser(UserCreateDto userCreateDto);
+    boolean createUser(UserCreateDto userCreateDto);
 
     UserDto getUserByEmail(String userEmail);
 
-    void deleteUserById(Long userId);
+    void deleteUserByEmail(String userEmail);
+
+    boolean canLogin(UserLogin userLogin);
 }
