@@ -23,6 +23,7 @@ public class User {
     private int age;
     private String email;
     private String address;
+    private String password;
 
    public static UserBuilder builder(){
        return new UserBuilder();
@@ -51,6 +52,11 @@ public class User {
 
         public UserBuilder withAddress(String address){
             user.setAddress(address);
+            return this;
+        }
+
+        public UserBuilder withPassword(String pass){
+            user.setPassword(pass);
             return this;
         }
 

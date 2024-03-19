@@ -16,4 +16,5 @@ public class UserCreateDto {
     private int age;
     private String email;
     private String address;
+    private String password;
 }

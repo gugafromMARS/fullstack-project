@@ -27,6 +27,7 @@ public class UserConverterImp implements UserConverter{
                 .withAge(userCreateDto.getAge())
                 .withEmail(userCreateDto.getEmail())
                 .withAddress(userCreateDto.getAddress())
+                .withPassword(userCreateDto.getPassword())
                 .build();
     }
 }

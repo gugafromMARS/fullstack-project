@@ -12,14 +12,7 @@ import { useRef, useState } from "react";
 import { CreateUserRequest } from "./CreateUserRequest";
 
 export default function Registration({ handleRegistration }) {
-  const [user, setUser] = useState({
-    name: "",
-    address: "",
-    age: 0,
-    email: "",
-    password: "",
-  });
-  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(false);
   const [error, setError] = useState();
 
   const name = useRef();
@@ -46,17 +39,13 @@ export default function Registration({ handleRegistration }) {
 
     let userDto;
     try {
-      userDto = await CreateUserRequest();
+      userDto = await CreateUserRequest(newUser);
     } catch (error) {
-      setUsers(users);
       setError({
         message: error.message || "Failed to create user",
       });
     }
 
-    setUsers((prevUsers) => {
-      return [...prevUsers, userDto];
-    });
     handleRegistration();
   }
 

@@ -1,7 +1,7 @@
 export async function CreateUserRequest(user) {
   const response = await fetch("http://localhost:8080/api/user", {
-    method: "PUT",
-    body: JSON.stringify({ user }),
+    method: "POST",
+    body: JSON.stringify(user),
     headers: {
       "Content-Type": "application/json",
     },
