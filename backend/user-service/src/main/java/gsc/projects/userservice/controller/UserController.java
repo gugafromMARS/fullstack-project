@@ -16,16 +16,19 @@ public class UserController {
     public final UserService userService;
 
     @PostMapping
+    @CrossOrigin
     public ResponseEntity<?> create(@RequestBody UserCreateDto userCreateDto){
         return new ResponseEntity<>(userService.createUser(userCreateDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{userEmail}")
+    @CrossOrigin
     public ResponseEntity<?> get(@PathVariable ("userEmail") String userEmail){
         return ResponseEntity.ok(userService.getUserByEmail(userEmail));
     }
 
     @DeleteMapping("/{userId}")
+    @CrossOrigin
     public ResponseEntity<?> deleteUser(@PathVariable ("userId") Long userId){
         userService.deleteUserById(userId);
         return new ResponseEntity<>("User delete successfully", HttpStatus.OK);
