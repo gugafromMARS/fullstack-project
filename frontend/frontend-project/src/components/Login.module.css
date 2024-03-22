@@ -3,3 +3,12 @@
   font-weight: 900;
   color: white;
 }
+
+.loginError {
+  border: 1px solid #e80c4d;
+  background-color: #fc7e7e;
+}
+
+.refused {
+  color: #e80c4d;
+}
