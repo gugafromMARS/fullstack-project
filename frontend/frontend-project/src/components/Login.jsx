@@ -16,6 +16,7 @@ import { LoginRequest } from "./CreateUserRequest";
 export default function Login({ userLog }) {
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState();
+  const [LoginRefused, setLoginRefused] = useState(false);
 
   const userEmail = useRef();
   const userPassword = useRef();
@@ -39,7 +40,10 @@ export default function Login({ userLog }) {
       });
     }
     if (canLogin) {
+      setLoginRefused(false);
       userLog();
+    } else {
+      setLoginRefused(true);
     }
   }
 
@@ -60,11 +64,17 @@ export default function Login({ userLog }) {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        {LoginRefused && (
+          <Text size="sm" ta="center" mt={5} className={classes.refused}>
+            Credentials wrong.
+          </Text>
+        )}
         <TextInput
           label="Email"
           placeholder="you@email.com"
           required
           ref={userEmail}
+          className={LoginRefused ? classes.loginError : null}
         />
         <PasswordInput
           label="Password"
@@ -72,6 +82,7 @@ export default function Login({ userLog }) {
           required
           mt="md"
           ref={userPassword}
+          className={LoginRefused ? classes.loginError : null}
         />
         <Button fullWidth mt="xl" onClick={handleLogin}>
           Sign in
