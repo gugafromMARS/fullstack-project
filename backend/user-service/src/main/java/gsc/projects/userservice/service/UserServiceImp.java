@@ -45,9 +45,12 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public boolean canLogin(UserLogin userLogin) {
+    public UserDto canLogin(UserLogin userLogin) {
         User existingUser = checkUser(userLogin.getUserEmail());
-        return userLogin.getPassword().equals(existingUser.getPassword());
+        if(userLogin.getPassword().equals(existingUser.getPassword())){
+            return userConverter.toDto(existingUser);
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User credentials are wrong");
     }
 
 
