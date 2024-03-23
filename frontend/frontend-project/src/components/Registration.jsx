@@ -6,6 +6,8 @@ import {
   Container,
   Button,
   NumberInput,
+  Text,
+  Anchor,
 } from "@mantine/core";
 import "./Registration.css";
 import { useRef, useState } from "react";
@@ -41,10 +43,16 @@ export default function Registration({ handleRegistration }) {
   }
 
   return (
-    <Container size={420} my={40}>
+    <Container className="regis" size={420} my={40}>
       <Title className="white" ta="center">
         Registration
       </Title>
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        If you want to go back,{" "}
+        <Anchor size="sm" component="button" onClick={handleRegistration}>
+          Cancel
+        </Anchor>
+      </Text>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <TextInput
           ref={name}

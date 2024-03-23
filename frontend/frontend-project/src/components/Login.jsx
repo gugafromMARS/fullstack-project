@@ -31,17 +31,17 @@ export default function Login({ userLog }) {
       password: userPassword.current.value,
     };
 
-    let canLogin;
+    let userDto;
     try {
-      canLogin = await LoginRequest(userCredentials);
+      userDto = await LoginRequest(userCredentials);
     } catch (error) {
       setError({
         message: error.message || "Failed to Login",
       });
     }
-    if (canLogin) {
+    if (userDto) {
       setLoginRefused(false);
-      userLog();
+      userLog(userDto);
     } else {
       setLoginRefused(true);
     }
@@ -52,7 +52,7 @@ export default function Login({ userLog }) {
   }
 
   return (
-    <Container size={420} my={40}>
+    <Container className={classes.loginStyle} size={420} my={40}>
       <Title ta="center" className={classes.title}>
         Welcome back!
       </Title>
@@ -66,7 +66,7 @@ export default function Login({ userLog }) {
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         {LoginRefused && (
           <Text size="sm" ta="center" mt={5} className={classes.refused}>
-            Credentials wrong.
+            Credentials are wrong.
           </Text>
         )}
         <TextInput
