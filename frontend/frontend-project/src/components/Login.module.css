@@ -12,3 +12,11 @@
 .refused {
   color: #e80c4d;
 }
+
+.loginStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 650px;
+}

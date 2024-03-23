@@ -1,3 +1,11 @@
 .white {
   color: white;
 }
+
+.regis {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  margin-left: 700px;
+}

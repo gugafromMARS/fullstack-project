@@ -1,3 +1,20 @@
+#orientation {
+  display: flex;
+  justify-content: flex-start;
+  align-self: start;
+  margin: 0 auto;
+}
+
+.projects {
+  display: flex;
+}
+
+.project {
+  height: 700px;
+  width: 1000px;
+  margin-left: 15rem;
+}
+
 .navbar {
   background-color: var(--mantine-color-body);
   height: rem(840px);
