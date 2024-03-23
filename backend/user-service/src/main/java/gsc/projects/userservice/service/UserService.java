@@ -11,5 +11,5 @@ public interface UserService {
 
     void deleteUserByEmail(String userEmail);
 
-    boolean canLogin(UserLogin userLogin);
+    UserDto canLogin(UserLogin userLogin);
 }
