@@ -11,5 +11,5 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByUserEmail(String userEmail);
-    Project findByUserEmailAndName(String name, String userName);
+    Project findByUserEmailAndName (String userEmail, String name);
 }
