@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/projects")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
     private final ProjectService projectService;

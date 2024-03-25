@@ -1,12 +1,34 @@
 import { SegmentedControl, Text, Paper } from "@mantine/core";
 import { IconDatabaseImport, IconLogout } from "@tabler/icons-react";
 import classes from "./NavbarSegmented.module.css";
+import { getProjects } from "./CreateUserRequest";
+import { useEffect, useState } from "react";
+import Project from "./Project";
 
 const tabs = {
   account: [{ link: "", label: "Projects", icon: IconDatabaseImport }],
 };
 
 export default function NavbarSegmented({ userLogout, userDto }) {
+  const [userProjects, setUserProjects] = useState([]);
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    async function handleProjects() {
+      let projects;
+      try {
+        projects = await getProjects(userDto.user.email);
+        setUserProjects(projects);
+      } catch (error) {
+        setError({
+          message: error.message || "Failed to get user projects",
+        });
+        setUserProjects(userProjects);
+      }
+    }
+    handleProjects();
+  }, [userProjects, userDto.user.email]);
+
   const links = tabs.account.map((item) => (
     <a
       className={classes.link}
@@ -61,7 +83,9 @@ export default function NavbarSegmented({ userLogout, userDto }) {
         p={30}
         mt={30}
         radius="md"
-      ></Paper>
+      >
+        <Project projects={userProjects} />
+      </Paper>
     </div>
   );
 }

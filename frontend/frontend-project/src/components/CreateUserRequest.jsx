@@ -33,3 +33,17 @@ export async function LoginRequest(userCredentials) {
 
   return respData;
 }
+
+export async function getProjects(userEmail) {
+  const response = await fetch(
+    `http://localhost:8081/api/projects?userEmail=${userEmail}`
+  );
+
+  const respData = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to get projects");
+  }
+
+  return respData;
+}
