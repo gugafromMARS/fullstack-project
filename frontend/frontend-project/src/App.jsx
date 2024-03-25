@@ -4,7 +4,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { useState } from "react";
 import Login from "./components/Login";
-import NavbarSegmented from "./components/NavbarSegmented";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -32,7 +32,7 @@ function App() {
   return (
     <MantineProvider>
       {userLoggedIn && (
-        <NavbarSegmented userLogout={handleUserLogout} userDto={user} />
+        <Dashboard userLogout={handleUserLogout} userDto={user} />
       )}
       {!userLoggedIn && <Login userLog={handleUserLogin} />}
     </MantineProvider>
