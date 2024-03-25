@@ -32,7 +32,7 @@ public class ProjectServiceImp implements ProjectService{
     @Transactional
     public ProjectDto createProject(ProjectCreateDto projectCreateDto) {
         Project existingProject = projectRepository
-                .findByUserEmailAndName(projectCreateDto.getName(), projectCreateDto.getUserEmail());
+                .findByUserEmailAndName(projectCreateDto.getUserEmail(), projectCreateDto.getName());
         if(existingProject != null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project already exists!");
         }
