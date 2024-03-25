@@ -1,18 +1,7 @@
-#orientation {
+.orientation {
   display: flex;
   justify-content: flex-start;
-  align-self: start;
-  margin: 0 auto;
-}
-
-.projects {
-  display: flex;
-}
-
-.project {
-  height: 400px;
-  width: 400px;
-  margin-left: 10rem;
+  align-items: flex-start;
 }
 
 .navbar {
