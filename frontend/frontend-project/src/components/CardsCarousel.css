@@ -1,0 +1,25 @@
+.card {
+  height: rem(240px);
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-size: cover;
+  background-position: center;
+  margin-left: 7rem;
+  margin-top: 1rem;
+}
+
+.dios {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr;
+}
+
+@media (max-width: 1800px) {
+  .dios {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr;
+  }
+}
