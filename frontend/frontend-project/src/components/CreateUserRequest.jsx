@@ -47,3 +47,24 @@ export async function getProjects(userEmail) {
 
   return respData;
 }
+
+export async function addTask(project, task) {
+  const response = await fetch(
+    `http://localhost:8081/api/projects/${project.id}/tasks`,
+    {
+      method: "POST",
+      body: JSON.stringify(task),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const respData = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to add task");
+  }
+
+  return respData;
+}
