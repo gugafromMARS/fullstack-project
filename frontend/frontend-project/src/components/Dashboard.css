@@ -1,5 +1,5 @@
 .dashboard {
   display: flex;
   border: 1px solid;
-  background-color: white;
+  background-image: url("../assets/cortica2.jpg");
 }

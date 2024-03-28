@@ -3,18 +3,23 @@
   width: 25rem;
 }
 
-.green {
-  background-color: rgb(183, 207, 5);
+.top-preview {
+  margin-top: 4rem;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-image: url("../assets/postit.png");
   align-items: center;
   background-size: cover;
   background-position: center;
   margin-left: 7rem;
+  margin-top: 1rem;
+}
+
+.preview-description {
   margin-top: 1rem;
 }
 
@@ -34,7 +39,7 @@
 }
 
 .category {
-  color: var(--mantine-color-white);
+  color: black;
   opacity: 0.7;
   font-weight: 700;
   line-height: 1.5;
@@ -43,7 +48,7 @@
 .title {
   font-family: Greycliff CF, sans-serif;
   font-weight: 900;
-  color: var(--mantine-color-white);
+  color: black;
   line-height: 1.2;
   font-size: rem(24px);
   margin-top: var(--mantine-spacing-xs);
@@ -52,14 +57,14 @@
 .title-tasks {
   font-family: Greycliff CF, sans-serif;
   font-weight: 900;
-  color: var(--mantine-color-white);
+  color: black;
   line-height: 1.2;
   font-size: rem(24px);
   margin-top: var(--mantine-spacing-xs);
 }
 
 .anchor {
-  color: var(--mantine-color-white);
+  color: black;
 }
 
 .bottom-btn {

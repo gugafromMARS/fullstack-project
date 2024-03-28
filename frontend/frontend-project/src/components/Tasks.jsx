@@ -1,6 +1,6 @@
 import "./Tasks.css";
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, Anchor, Text } from "@mantine/core";
+import { Modal, Anchor, Text, Paper, Title, Button } from "@mantine/core";
 import { useState } from "react";
 
 export default function Tasks({ seletedProject }) {
@@ -29,21 +29,31 @@ export default function Tasks({ seletedProject }) {
         </Modal>
       )}
 
-      <ul className="tasks-list">
-        {seletedProject.tasks.map((task) => (
-          <Anchor
-            className="anchor"
-            size="sm"
-            component="button"
-            onClick={() => handleTaskClick(task)}
-            key={task.id}
-          >
-            <Text size="xl">
-              <li>{task.name}</li>
-            </Text>
-          </Anchor>
-        ))}
-      </ul>
+      <Paper shadow="xl" p="xl" radius="md" className={`card-tasks`}>
+        <Title order={3} className="title-tasks">
+          Tasks
+        </Title>
+        <ul className="tasks-list">
+          {seletedProject.tasks.map((task) => (
+            <Anchor
+              className="anchor"
+              size="sm"
+              component="button"
+              onClick={() => handleTaskClick(task)}
+              key={task.id}
+            >
+              <Text size="xl">
+                <li>{task.name}</li>
+              </Text>
+            </Anchor>
+          ))}
+        </ul>
+        <div className="bottom-btn">
+          <Button variant="white" color="dark" className="btn-task">
+            Add task
+          </Button>
+        </div>
+      </Paper>
     </>
   );
 }

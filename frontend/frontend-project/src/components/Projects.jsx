@@ -16,11 +16,8 @@ export default function Project({ userDto }) {
       try {
         projects = await getProjects(userDto.user.email);
 
-        const coloredProjects = projects.map((project) => ({
-          ...project,
-          color: "green",
-        }));
-        setUserProjects(coloredProjects);
+        const reversedProjects = projects.reverse();
+        setUserProjects(reversedProjects);
       } catch (error) {
         setError({
           message: error.message || "Failed to get user projects",

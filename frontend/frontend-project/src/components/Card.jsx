@@ -8,13 +8,12 @@ export default function Card({
   description,
   userEmail,
   tasks,
-  color,
   previewing,
 }) {
   return (
-    <Paper shadow="md" p="xl" radius="md" className={`card ${color}`}>
+    <Paper shadow="md" p="xl" radius="md" className={`card background`}>
       <div>
-        <Text className="category" size="xs">
+        <Text className="category id" size="xs">
           {id}
         </Text>
         <Title order={3} className="title">
@@ -22,9 +21,6 @@ export default function Card({
         </Title>
         <Text className="category" size="xs">
           {date}
-        </Text>
-        <Text className="category" size="xs">
-          {description}
         </Text>
       </div>
       <Button onClick={() => previewing(id)} variant="white" color="dark">
