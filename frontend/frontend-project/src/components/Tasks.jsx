@@ -1,27 +1,52 @@
 import "./Tasks.css";
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, Anchor, Text, Paper, Title, Button } from "@mantine/core";
-import { useState } from "react";
+import { Modal, Button, TextInput } from "@mantine/core";
+import { useRef, useState } from "react";
+import TasksList from "./TasksList";
 
-export default function Tasks({ seletedProject }) {
+export default function Tasks({ seletedProject, postTask }) {
   const [opened, { open, close }] = useDisclosure(false);
   const [choosedTask, setChoosedTask] = useState(null);
+  const [addingTask, setAddingTask] = useState(false);
+  const [error, setError] = useState();
 
   const haveTasks = seletedProject.tasks.length > 0;
 
-  if (!haveTasks) {
-    return <p>Don`t have tasks yet!</p>;
-  }
+  const name = useRef();
+  const description = useRef();
 
-  function handleTaskClick(task) {
+  function handleTaskOpen(task) {
     setChoosedTask(task);
     open();
+  }
+
+  function handleAddTask() {
+    setAddingTask(true);
+    open();
+  }
+
+  function handleTaskClose() {
+    setChoosedTask(null);
+    close();
+  }
+
+  function handleCloseAddTask() {
+    setAddingTask(false);
+    close();
+  }
+
+  async function handlePostTask() {
+    postTask(seletedProject, {
+      name: name.current.value,
+      description: description.current.value,
+    });
+    handleCloseAddTask();
   }
 
   return (
     <>
       {choosedTask && (
-        <Modal className="modal" opened={opened} onClose={close}>
+        <Modal className="modal" opened={opened} onClose={handleTaskClose}>
           <Modal.Title className="title-pop">Task description</Modal.Title>
           <Modal.Body className="description">
             {choosedTask.description}
@@ -29,31 +54,29 @@ export default function Tasks({ seletedProject }) {
         </Modal>
       )}
 
-      <Paper shadow="xl" p="xl" radius="md" className={`card-tasks`}>
-        <Title order={3} className="title-tasks">
-          Tasks
-        </Title>
-        <ul className="tasks-list">
-          {seletedProject.tasks.map((task) => (
-            <Anchor
-              className="anchor"
-              size="sm"
-              component="button"
-              onClick={() => handleTaskClick(task)}
-              key={task.id}
-            >
-              <Text size="xl">
-                <li>{task.name}</li>
-              </Text>
-            </Anchor>
-          ))}
-        </ul>
-        <div className="bottom-btn">
-          <Button variant="white" color="dark" className="btn-task">
-            Add task
+      {addingTask && (
+        <Modal className="modal" opened={opened} onClose={handleCloseAddTask}>
+          <Modal.Title className="title-pop">Add Task</Modal.Title>
+          <Modal.Body className="description">
+            <TextInput ref={name} label="Name" required />
+            <TextInput ref={description} label="Description" required />
+          </Modal.Body>
+          <Button
+            onClick={handlePostTask}
+            className="btn-task"
+            variant="filled"
+            color="gray"
+          >
+            + Add Task
           </Button>
-        </div>
-      </Paper>
+        </Modal>
+      )}
+
+      <TasksList
+        seletedProject={seletedProject}
+        taskOpen={handleTaskOpen}
+        addTask={handleAddTask}
+      />
     </>
   );
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getProjects } from "./CreateUserRequest";
 import NoProject from "./NoProject";
 import Prewiew from "./Preview";
+import { addTask } from "./CreateUserRequest";
 
 export default function Project({ userDto }) {
   const [userProjects, setUserProjects] = useState([]);
@@ -46,6 +47,20 @@ export default function Project({ userDto }) {
     return userProjects.filter((project) => project.id == id);
   }
 
+  async function handleAddTask(selectedProject, task) {
+    try {
+      const taskDto = await addTask(selectedProject, task);
+      const newProject = selectedProject.tasks.push(task);
+      setUserProjects((prevProjects) => {
+        return [...prevProjects, newProject];
+      });
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to add task",
+      });
+    }
+  }
+
   const haveProjects = userProjects.length > 0;
 
   return (
@@ -60,6 +75,7 @@ export default function Project({ userDto }) {
         <Prewiew
           selectedProject={projectSelected}
           notPreviewing={notPreviewing}
+          handleAddTask={handleAddTask}
         />
       )}
     </>
