@@ -16,7 +16,7 @@ export default function TasksList({ seletedProject, taskOpen, addTask }) {
             onClick={() => taskOpen(task)}
             key={task.id}
           >
-            <Text size="xl">
+            <Text key={task.id} size="xl">
               <li className="li-task" key={task.id}>
                 {task.name}
               </li>
