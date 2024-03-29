@@ -8,7 +8,7 @@ Create a user account, create projects and create tasks for each project.
 
 ## Architecture
 
-![ArchitectureImg](https://github.com/gugafromMARS/FoodProject-Rabbitmq/assets/116969206/e151066a-873d-4eec-927a-04e5afeb08f8)
+![ArchitectureImg](https://github.com/gugafromMARS/fullstack-project/assets/116969206/f16ef9df-6bac-420e-be6c-eef0421160ff)
 
 
 ## Technology
