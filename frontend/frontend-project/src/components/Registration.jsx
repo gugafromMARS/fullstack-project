@@ -47,9 +47,15 @@ export default function Registration({ handleRegistration }) {
       <Title className="white" ta="center">
         Registration
       </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
+      <Text c="white" size="sm" ta="center" mt={5}>
         If you want to go back,{" "}
-        <Anchor size="sm" component="button" onClick={handleRegistration}>
+        <Anchor
+          className="white"
+          td="underline"
+          size="sm"
+          component="button"
+          onClick={handleRegistration}
+        >
           Cancel
         </Anchor>
       </Text>
