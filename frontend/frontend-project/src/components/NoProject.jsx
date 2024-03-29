@@ -35,7 +35,7 @@ export default function NoProject({ text, btn, createProject, userDto }) {
   return (
     <>
       <Modal className="modal" opened={opened} onClose={handleCloseCreation}>
-        <Modal.Title className="title-pop">Add Task</Modal.Title>
+        <Modal.Title className="title-pop">Add Project</Modal.Title>
         <Modal.Body className="description">
           <TextInput ref={name} label="Name" required />
           <DateInput valueFormat="YYYY-MM-DD" label="Date" ref={date} />

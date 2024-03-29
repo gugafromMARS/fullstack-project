@@ -6,6 +6,8 @@ import Preview from "./Preview";
 import { useEffect, useState } from "react";
 import { getProjects, addTask } from "./CreateUserRequest";
 import { createProject } from "./CreateUserRequest";
+import { deleteProject } from "./CreateUserRequest";
+import { deleteTask } from "./CreateUserRequest";
 
 export default function Dashboard({ userDto, userLogout }) {
   const [userProjects, setUserProjects] = useState([]);
@@ -14,22 +16,23 @@ export default function Dashboard({ userDto, userLogout }) {
   const [projectSelected, setProjectSelected] = useState();
 
   useEffect(() => {
-    async function handleProjects() {
-      let projects;
-      try {
-        projects = await getProjects(userDto.user.email);
-
-        const reversedProjects = projects.reverse();
-        setUserProjects(reversedProjects);
-      } catch (error) {
-        setError({
-          message: error.message || "Failed to get user projects",
-        });
-        setUserProjects([]);
-      }
-    }
     handleProjects();
   }, [userProjects]);
+
+  async function handleProjects() {
+    let projects;
+    try {
+      projects = await getProjects(userDto.user.email);
+
+      const reversedProjects = projects.reverse();
+      setUserProjects(reversedProjects);
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to get user projects",
+      });
+      setUserProjects([]);
+    }
+  }
 
   async function handleCreateProject(projectCreated) {
     try {
@@ -37,6 +40,7 @@ export default function Dashboard({ userDto, userLogout }) {
       setUserProjects((prevProjects) => {
         return [...prevProjects, project];
       });
+      handleProjects();
     } catch (error) {
       setError({
         message: error.message || "Failed to create project",
@@ -69,13 +73,48 @@ export default function Dashboard({ userDto, userLogout }) {
   async function handleAddTask(selectedProject, task) {
     try {
       const taskDto = await addTask(selectedProject, task);
-      const newProject = selectedProject.tasks.push(task);
+      const newProject = selectedProject.tasks.push(taskDto);
       setUserProjects((prevProjects) => {
         return [...prevProjects, newProject];
       });
     } catch (error) {
       setError({
         message: error.message || "Failed to add task",
+      });
+    }
+  }
+
+  async function handleDeleteProject(selectedProject) {
+    try {
+      await deleteProject(selectedProject);
+      const updatedProjects = userProjects.filter(
+        (project) => project.id !== selectedProject.id
+      );
+      setUserProjects(updatedProjects);
+      setIsPreviewing(false);
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to remove project",
+      });
+    }
+  }
+
+  async function handleDeleteTask(selectedProject, selectedTask) {
+    try {
+      await deleteTask(selectedProject, selectedTask);
+      const updatedProjects = userProjects.map((project) => {
+        if (project.id === selectedProject.id) {
+          return {
+            ...project,
+            tasks: project.tasks.filter((task) => task !== selectedTask),
+          };
+        }
+        return project;
+      });
+      setUserProjects(updatedProjects);
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to remove task",
       });
     }
   }
@@ -110,6 +149,8 @@ export default function Dashboard({ userDto, userLogout }) {
           selectedProject={projectSelected}
           notPreviewing={notPreviewing}
           handleAddTask={handleAddTask}
+          deleteProject={handleDeleteProject}
+          deleteTask={handleDeleteTask}
         />
       )}
     </div>

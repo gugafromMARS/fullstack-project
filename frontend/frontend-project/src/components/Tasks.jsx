@@ -4,13 +4,14 @@ import { Modal, Button, TextInput } from "@mantine/core";
 import { useRef, useState } from "react";
 import TasksList from "./TasksList";
 
-export default function Tasks({ seletedProject, postTask }) {
+export default function Tasks({ seletedProject, postTask, handleDelete }) {
   const [opened, { open, close }] = useDisclosure(false);
   const [choosedTask, setChoosedTask] = useState(null);
   const [addingTask, setAddingTask] = useState(false);
   const [error, setError] = useState();
+  const [project, setProject] = useState(seletedProject);
 
-  const haveTasks = seletedProject.tasks.length > 0;
+  const haveTasks = project.tasks.length > 0;
 
   const name = useRef();
   const description = useRef();
@@ -36,11 +37,22 @@ export default function Tasks({ seletedProject, postTask }) {
   }
 
   async function handlePostTask() {
-    postTask(seletedProject, {
+    postTask(project, {
       name: name.current.value,
       description: description.current.value,
     });
     handleCloseAddTask();
+  }
+
+  function handleDeleteTask() {
+    handleDelete(project, choosedTask);
+    setProject((prevProject) => {
+      return {
+        ...prevProject,
+        tasks: prevProject.tasks.filter((task) => task.id != choosedTask.id),
+      };
+    });
+    handleTaskClose();
   }
 
   return (
@@ -51,7 +63,12 @@ export default function Tasks({ seletedProject, postTask }) {
           <Modal.Body className="description">
             {choosedTask.description}
           </Modal.Body>
-          <Button className="btn-task" variant="filled" color="gray">
+          <Button
+            onClick={handleDeleteTask}
+            className="btn-task"
+            variant="filled"
+            color="gray"
+          >
             Delete Task
           </Button>
         </Modal>
@@ -76,7 +93,7 @@ export default function Tasks({ seletedProject, postTask }) {
       )}
 
       <TasksList
-        seletedProject={seletedProject}
+        seletedProject={project}
         taskOpen={handleTaskOpen}
         addTask={handleAddTask}
       />

@@ -56,9 +56,11 @@ public class ProjectServiceImp implements ProjectService{
     @Override
     @Transactional
     public void deleteProjectById(Long id) {
-        projectRepository.delete(projectRepository
+        Project existingProject  = projectRepository
                 .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found")));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+        taskRepository.deleteAllByProject(existingProject);
+        projectRepository.delete(existingProject);
     }
 
     @Override

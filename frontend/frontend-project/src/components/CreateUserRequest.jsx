@@ -86,3 +86,29 @@ export async function createProject(newProject) {
 
   return respData;
 }
+
+export async function deleteProject(project) {
+  const response = await fetch(
+    `http://localhost:8081/api/projects/${project.id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Cant delete project ");
+  }
+}
+
+export async function deleteTask(project, task) {
+  const response = await fetch(
+    `http://localhost:8081/api/projects/${project.id}/tasks/${task.id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Cant delete task");
+  }
+}
