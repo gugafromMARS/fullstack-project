@@ -44,6 +44,10 @@ export default function Dashboard({ userDto, userLogout }) {
     setIsPreviewing((prevState) => !prevState);
   }
 
+  function handleGoBack() {
+    setIsPreviewing(false);
+  }
+
   function getProjectById(id) {
     return userProjects.filter((project) => project.id == id);
   }
@@ -69,7 +73,7 @@ export default function Dashboard({ userDto, userLogout }) {
       <NavbarSegmented
         userDto={userDto}
         userLogout={userLogout}
-        goBack={handlePreview}
+        goBack={handleGoBack}
       />
       {!haveProjects && (
         <NoProject text="No Projects Yet" btn="+ Add Project" />
