@@ -56,9 +56,15 @@ export default function Login({ userLog }) {
       <Title ta="center" className={classes.title}>
         Welcome back!
       </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
+      <Text c="white" size="sm" ta="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor size="sm" component="button" onClick={handleRegister}>
+        <Anchor
+          c="white"
+          td="underline"
+          size="sm"
+          component="button"
+          onClick={handleRegister}
+        >
           Create account
         </Anchor>
       </Text>
