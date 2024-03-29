@@ -1,6 +1,6 @@
 import { Paper, Title, Text, Anchor, Button } from "@mantine/core";
 
-export default function Project({ project, notPreviewing }) {
+export default function Project({ project, notPreviewing, handleDelete }) {
   return (
     <Paper shadow="xl" p="xl" radius="md" className={`card project`}>
       <div className="top-preview">
@@ -29,7 +29,11 @@ export default function Project({ project, notPreviewing }) {
           {project.description}
         </Text>
       </div>
-      <Button variant="filled" color="gray">
+      <Button
+        onClick={() => handleDelete(project)}
+        variant="filled"
+        color="gray"
+      >
         Delete Project
       </Button>
     </Paper>

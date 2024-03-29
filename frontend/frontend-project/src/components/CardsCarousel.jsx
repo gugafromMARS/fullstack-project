@@ -12,7 +12,7 @@ export default function CardsCarousel({
     <div className="dios">
       <NoProject
         text="No Project Selected"
-        btn="+ Add Project"
+        btn="+ Create Project"
         createProject={createProject}
         userDto={userDto}
       />
