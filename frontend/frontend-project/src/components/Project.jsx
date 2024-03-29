@@ -4,10 +4,11 @@ export default function Project({ project, notPreviewing }) {
   return (
     <Paper shadow="xl" p="xl" radius="md" className={`card project`}>
       <div className="top-preview">
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
+        <Text c="black" size="sm" ta="center" mt={5}>
           Want to go back?{" "}
           <Anchor
             className="anchor"
+            td="underline"
             size="sm"
             component="button"
             onClick={notPreviewing}

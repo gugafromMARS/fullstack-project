@@ -68,3 +68,21 @@ export async function addTask(project, task) {
 
   return respData;
 }
+
+export async function createProject(newProject) {
+  const response = await fetch("http://localhost:8081/api/projects", {
+    method: "POST",
+    body: JSON.stringify(newProject),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const respData = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to create new project");
+  }
+
+  return respData;
+}

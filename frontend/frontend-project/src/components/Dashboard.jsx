@@ -5,6 +5,7 @@ import Carousel from "./CardsCarousel";
 import Preview from "./Preview";
 import { useEffect, useState } from "react";
 import { getProjects, addTask } from "./CreateUserRequest";
+import { createProject } from "./CreateUserRequest";
 
 export default function Dashboard({ userDto, userLogout }) {
   const [userProjects, setUserProjects] = useState([]);
@@ -29,6 +30,19 @@ export default function Dashboard({ userDto, userLogout }) {
     }
     handleProjects();
   }, [userProjects]);
+
+  async function handleCreateProject(projectCreated) {
+    try {
+      const project = await createProject(projectCreated);
+      setUserProjects((prevProjects) => {
+        return [...prevProjects, project];
+      });
+    } catch (error) {
+      setError({
+        message: error.message || "Failed to create project",
+      });
+    }
+  }
 
   function previewing(id) {
     handlePreview();
@@ -76,10 +90,20 @@ export default function Dashboard({ userDto, userLogout }) {
         goBack={handleGoBack}
       />
       {!haveProjects && (
-        <NoProject text="No Projects Yet" btn="+ Add Project" />
+        <NoProject
+          text="No Projects Yet"
+          btn="+ Add Project"
+          createProject={handleCreateProject}
+          userDto={userDto}
+        />
       )}
       {haveProjects && !isPreviewing && (
-        <Carousel projects={userProjects} previewing={previewing} />
+        <Carousel
+          projects={userProjects}
+          previewing={previewing}
+          createProject={handleCreateProject}
+          userDto={userDto}
+        />
       )}
       {haveProjects && isPreviewing && (
         <Preview
