@@ -41,3 +41,14 @@
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 1800px) {
+  .card-tasks {
+    height: 50rem;
+    width: 42rem;
+  }
+
+  .bottom-btn {
+    margin-left: 270px;
+  }
+}
