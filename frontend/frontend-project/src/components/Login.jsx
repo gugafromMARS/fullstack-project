@@ -90,7 +90,7 @@ export default function Login({ userLog }) {
           ref={userPassword}
           className={LoginRefused ? classes.loginError : null}
         />
-        <Button fullWidth mt="xl" onClick={handleLogin}>
+        <Button fullWidth mt="xl" onClick={handleLogin} color="gray">
           Sign in
         </Button>
       </Paper>

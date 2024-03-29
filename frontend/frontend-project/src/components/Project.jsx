@@ -1,4 +1,4 @@
-import { Paper, Title, Text, Anchor } from "@mantine/core";
+import { Paper, Title, Text, Anchor, Button } from "@mantine/core";
 
 export default function Project({ project, notPreviewing }) {
   return (
@@ -29,6 +29,9 @@ export default function Project({ project, notPreviewing }) {
           {project.description}
         </Text>
       </div>
+      <Button variant="filled" color="gray">
+        Delete Project
+      </Button>
     </Paper>
   );
 }

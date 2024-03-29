@@ -51,6 +51,9 @@ export default function Tasks({ seletedProject, postTask }) {
           <Modal.Body className="description">
             {choosedTask.description}
           </Modal.Body>
+          <Button className="btn-task" variant="filled" color="gray">
+            Delete Task
+          </Button>
         </Modal>
       )}
 
