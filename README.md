@@ -37,7 +37,9 @@ docker run -d -p 3306:3306 --name usersdb  -v $(pwd)/usersdata:/var/lib/mysql -e
 docker run -d -p 3307:3306 --name projectsdb  -v $(pwd)/projectsdata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=projectsdb mysql:latest
 ```
 2- Run backend microservices(on backend project folder)
+
 2.1- Users microservice
+
 2.2- Projects and Tasks microservice
 
 3- Run on therminal
