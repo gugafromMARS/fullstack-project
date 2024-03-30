@@ -27,6 +27,7 @@ Services used.
 ## Getting started
 
 1- Create docker containers for both microservices in backend (run on therminal):
+
 1.1- Users database container
 ```shell script
 docker run -d -p 3306:3306 --name usersdb  -v $(pwd)/usersdata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=usersdb mysql:latest
